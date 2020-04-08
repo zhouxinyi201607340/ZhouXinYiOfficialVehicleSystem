@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    <tlib-version>1.0</tlib-version>
+    <short-name>myTaglib</short-name>
+    <!-- 定义该标签库的URI -->
+    <uri>http://com.web.output.tag</uri>
+    <!-- 定义第一个标签 -->
+    <tag>
+        <!-- 定义标签名 -->
+        <name>menu</name>
+        <!-- 定义标签处理类 -->
+        <tag-class>xyz.jfshare.car.system.simpleTag.MenuPerm</tag-class>
+        <!-- 定义标签体为空 -->
+        <body-content>empty</body-content>
+    </tag>
+</taglib>

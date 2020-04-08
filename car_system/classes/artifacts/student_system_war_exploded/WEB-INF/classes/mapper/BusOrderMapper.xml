@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.BusOrderMapper">
+  <select id="listOrder" parameterType="xyz.jfshare.car.system.entity.BusOrder" resultType="xyz.jfshare.car.system.entity.BusOrder">
+    SELECT
+    bo.id,
+    bo.driver_id,
+    bo.company_id,
+    bo.ono,
+    bo.start_time,
+    bo.review_time,
+    bo.place,
+    bo.money,
+    bo.status,
+    bo.phone,
+    bo.create_time,
+    bo.update_time,
+    bc.name as companyName,
+    bd.name as driverName
+    FROM bus_order bo
+    left join bus_company bc on bo.company_id = bc.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    where bo.id != 0
+    <if test="driverName != null">
+      and bd.name LIKE CONCAT('%',#{driverName},'%')
+    </if>
+    <if test="companyName != null">
+      and bc.name LIKE CONCAT('%',#{companyName},'%')
+    </if>
+    ORDER BY bo.id DESC
+    <if test="size != null">
+      LIMIT #{skip},#{size}
+    </if>
+  </select>
+
+  <select id="countOrder" parameterType="xyz.jfshare.car.system.entity.BusOrder" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM bus_order bo
+    left join bus_company bc on bo.company_id = bc.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    where bc.id != 0
+    <if test="driverName != null">
+      and bd.name LIKE CONCAT('%',#{driverName},'%')
+    </if>
+    <if test="companyName != null">
+      and bc.name LIKE CONCAT('%',#{companyName},'%')
+    </if>
+  </select>
+
+  <select id="getByCompanyId" resultType="xyz.jfshare.car.system.entity.BusOrder">
+    SELECT
+    bo.id,
+    bo.driver_id,
+    bo.company_id,
+    bo.ono,
+    bo.start_time,
+    bo.review_time,
+    bo.place,
+    bo.status,
+    bo.money,
+    bo.phone,
+    bo.create_time,
+    bo.update_time,
+    bc.name as companyName,
+    bd.name as driverName
+    FROM bus_order bo
+    left join bus_company bc on bo.company_id = bc.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    where bo.company_id = #{id}
+    ORDER BY bo.id DESC
+  </select>
+
+  <select id="getByDriverId" resultType="xyz.jfshare.car.system.entity.BusOrder">
+    SELECT
+    bo.id,
+    bo.driver_id,
+    bo.company_id,
+    bo.ono,
+    bo.start_time,
+    bo.review_time,
+    bo.place,
+    bo.status,
+    bo.money,
+    bo.phone,
+    bo.create_time,
+    bo.update_time,
+    bc.name as companyName,
+    bd.name as driverName
+    FROM bus_order bo
+    left join bus_company bc on bo.company_id = bc.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    where bo.driver_id = #{id}
+    ORDER BY bo.id DESC
+  </select>
+
+  <select id="isCompanyOrdering"  resultType="xyz.jfshare.car.system.entity.BusOrder">
+    SELECT * FROM bus_order bo
+    left join bus_company bc on bo.company_id = bc.id
+    left join sys_user su on bc.user_id = su.id
+    where su.id = #{userId}
+    and su.status = 0
+    and bc.status = 2
+    and bo.status != 6
+    and bo.status != 7
+  </select>
+</mapper>

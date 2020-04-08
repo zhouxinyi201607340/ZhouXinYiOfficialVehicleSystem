@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.PermissionMapper">
+    <select id="getMenu" resultType="Permission">
+        select
+        sp.id, sp.name, sp.uri, sp.is_menu, sp.pid, sp.create_time, sp.update_time
+        from sys_permission sp
+        left join sys_rel_role_permission srrp on sp.id = srrp.permission_id
+        where srrp.role_id = #{roleId}
+        and sp.is_menu = 1
+    </select>
+
+    <select id="getAll" resultType="Permission">
+        select
+        sp.id, sp.name, sp.uri, sp.is_menu, sp.pid, sp.create_time, sp.update_time
+        from sys_permission sp
+        left join sys_rel_role_permission srrp on sp.id = srrp.permission_id
+        where srrp.role_id = #{roleId}
+    </select>
+
+</mapper>

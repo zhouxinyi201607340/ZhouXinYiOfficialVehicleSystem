@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.BusCompanyMapper">
+  <resultMap id="BaseResultMap" type="xyz.jfshare.car.system.entity.BusCompany">
+    <!--@mbg.generated-->
+    <!--@Table bus_company-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="leader" jdbcType="VARCHAR" property="leader" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, `name`, email, leader, create_time, update_time
+  </sql>
+
+  <select id="listCompany" parameterType="xyz.jfshare.car.system.entity.BusCompany" resultType="xyz.jfshare.car.system.entity.BusCompany">
+    SELECT
+    id,
+    name,
+    email,
+    status,
+    leader,
+    update_time
+    FROM bus_company
+    where id != 0
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="leader != null">
+      and leader LIKE CONCAT('%',#{leader},'%')
+    </if>
+    ORDER BY id DESC
+    <if test="size != null">
+      LIMIT #{skip},#{size}
+    </if>
+  </select>
+
+  <select id="countCompany" parameterType="xyz.jfshare.car.system.entity.BusCompany" resultType="java.lang.Integer">
+    SELECT COUNT(id)
+    FROM bus_company
+    where id != 0
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="leader != null">
+      and leader LIKE CONCAT('%',#{leader},'%')
+    </if>
+  </select>
+
+  <select id="getAll" resultType="xyz.jfshare.car.system.entity.BusCompany">
+    SELECT
+    id,
+    name,
+    email,
+    leader,
+    status,
+    update_time
+    FROM bus_company
+    ORDER BY id DESC
+  </select>
+</mapper>

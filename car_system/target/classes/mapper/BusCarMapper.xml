@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.BusCarMapper">
+
+  <select id="listCar" parameterType="xyz.jfshare.car.system.entity.BusCar" resultType="xyz.jfshare.car.system.entity.BusCar">
+    SELECT
+    bc.id,
+    bc.classify_id,
+    bc.number,
+    bc.color,
+    bc.bands,
+    bc.type,
+    bc.status,
+    dc.name as classify,
+    bc.update_time
+    FROM bus_car bc 
+    left join dic_classify dc on bc.classify_id = dc.id
+    where bc.id != 0
+    <if test="color != null">
+      and color LIKE CONCAT('%',#{color},'%')
+    </if>
+    <if test="bands != null">
+      and bands LIKE CONCAT('%',#{bands},'%')
+    </if>
+    <if test="classifyId != null">
+      and dc.id = classifyId
+    </if>
+    ORDER BY bc.id DESC
+    <if test="size != null">
+      LIMIT #{skip},#{size}
+    </if>
+  </select>
+
+  <select id="countCar" parameterType="xyz.jfshare.car.system.entity.BusCar" resultType="java.lang.Integer">
+    SELECT count(*)
+    from bus_car bc
+    left join dic_classify dc on bc.classify_id = dc.id
+    where bc.id != 0
+    <if test="color != null">
+      and color LIKE CONCAT('%',#{color},'%')
+    </if>
+    <if test="bands != null">
+      and bands LIKE CONCAT('%',#{bands},'%')
+    </if>
+    <if test="classifyId != null">
+      and dc.id = classifyId
+    </if>
+  </select>
+
+  <select id="getAll" parameterType="xyz.jfshare.car.system.entity.BusCar" resultType="xyz.jfshare.car.system.entity.BusCar">
+        SELECT
+        id,
+        classify_id,
+        number,
+        color,
+        bands,
+        type,
+        status,
+        update_time
+        FROM bus_car
+        ORDER BY id DESC
+    </select>
+</mapper>

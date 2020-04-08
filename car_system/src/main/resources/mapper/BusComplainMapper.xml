@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.BusComplainMapper">
+
+  <select id="listComplain" parameterType="xyz.jfshare.car.system.entity.BusComplain" resultType="xyz.jfshare.car.system.entity.BusComplain">
+    SELECT
+    bus_complain.id,
+    bus_complain.order_id,
+    bus_complain.type,
+    bus_complain.status,
+    bus_complain.score,
+    bus_complain.description,
+    bus_complain.create_time,
+    bus_complain.update_time,
+    bc.name as companyName,
+    bd.name as driverName,
+    bo.ono as ono
+    FROM bus_complain
+    left join bus_order bo on bus_complain.order_id = bo.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    left join bus_company bc on bo.company_id = bc.id
+    where bus_complain.id != 0
+    <if test="driverName != null">
+      and bd.name LIKE CONCAT('%',#{driverName},'%')
+    </if>
+    <if test="companyName != null">
+      and bc.name LIKE CONCAT('%',#{companyName},'%')
+    </if>
+    ORDER BY bus_complain.id DESC
+    <if test="size != null">
+      LIMIT #{skip},#{size}
+    </if>
+  </select>
+
+  <select id="countComplain" parameterType="xyz.jfshare.car.system.entity.BusComplain" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM bus_complain
+    left join bus_order bo on bus_complain.order_id = bo.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    left join bus_company bc on bo.company_id = bc.id
+    where bus_complain.id != 0
+    <if test="driverName != null">
+      and bd.name LIKE CONCAT('%',#{driverName},'%')
+    </if>
+    <if test="companyName != null">
+      and bc.name LIKE CONCAT('%',#{companyName},'%')
+    </if>
+  </select>
+
+  <select id="listByDriverId" resultType="xyz.jfshare.car.system.entity.BusComplain">
+    SELECT
+    bus_complain.id,
+    bus_complain.order_id,
+    bus_complain.type,
+    bus_complain.status,
+    bus_complain.score,
+    bus_complain.description,
+    bus_complain.create_time,
+    bus_complain.update_time,
+    bc.name as companyName,
+    bd.name as driverName,
+    bo.ono as ono
+    FROM bus_complain
+    left join bus_order bo on bus_complain.order_id = bo.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    left join bus_company bc on bo.company_id = bc.id
+    where bo.driver_id = #{driverId}
+    ORDER BY bus_complain.id DESC
+  </select>
+
+  <select id="listByCompanyId" resultType="xyz.jfshare.car.system.entity.BusComplain">
+    SELECT
+    bus_complain.id,
+    bus_complain.order_id,
+    bus_complain.type,
+    bus_complain.status,
+    bus_complain.score,
+    bus_complain.description,
+    bus_complain.create_time,
+    bus_complain.update_time,
+    bc.name as companyName,
+    bd.name as driverName,
+    bo.ono as ono
+    FROM bus_complain
+    left join bus_order bo on bus_complain.order_id = bo.id
+    left join bus_driver bd on bo.driver_id = bd.id
+    left join bus_company bc on bo.company_id = bc.id
+    where bo.company_id = #{companyId}
+    ORDER BY bus_complain.id DESC
+  </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.UserMapper">
+    <select id="getByUsername"  resultType="xyz.jfshare.car.system.entity.User">
+        select * from sys_user where username = #{username}
+    </select>
+    <select id="getByUserId"  resultType="xyz.jfshare.car.system.entity.User">
+        select
+        su.id,
+        su.nickname,
+        su.username,
+        su.status,
+        su.icon,
+        su.role_id,
+        su.update_time,
+        sr.description as roleName
+        from sys_user su
+        left join sys_role sr on su.role_id = sr.id
+        where su.id = #{userId}
+        and su.status = 0
+    </select>
+
+    <select id="listUser" resultType="xyz.jfshare.car.system.entity.User">
+        select
+        su.id,
+        su.nickname,
+        su.username,
+        su.status,
+        su.icon,
+        su.role_id,
+        su.create_time,
+        su.update_time,
+        sr.description as roleName
+        from sys_user su
+        left join sys_role sr on su.role_id = sr.id
+        where su.status = 0
+        <if test="nickname != null">
+            and su.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+
+
+        order by su.id desc
+    </select>
+
+    <select id="countUser" resultType="java.lang.Integer">
+        SELECT COUNT(su.id)
+        from sys_user su
+        left join sys_role sr on su.role_id = sr.id
+        where su.status = 0
+        <if test="nickname != null">
+            and su.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+    </select>
+</mapper>

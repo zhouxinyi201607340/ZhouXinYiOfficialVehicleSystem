@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>支付页面</title>
+</head>
+<body>
+<h2>由于第三方在线支付接口需要营业执照商业认证，因此先用此方法代替在线支付</h2>
+<br/>
+<br/>
+<div  style="text-align: center">
+    <button onclick="pay()" style="width:140px;height: 50px">确认支付</button>
+</div>
+</body>
+
+<script type="text/javascript">
+    function pay() {
+        window.location.href = 'success.html';
+    }
+    
+    function querystring(qs) {
+        let s = location.href;
+        s = s.replace("?","?&").split("&")
+        let re = "";
+        for (i = 1;i < s.length;i++){
+            if (s[i].indexOf(qs+"=") === 0){
+                re = s[i].replace(qs+"=","")
+            }
+            return re
+        }
+    }
+</script>
+</html>

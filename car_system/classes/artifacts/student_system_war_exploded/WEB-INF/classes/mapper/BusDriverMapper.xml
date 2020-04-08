@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.jfshare.car.system.dao.BusDriverMapper">
+  <resultMap id="BaseResultMap" type="xyz.jfshare.car.system.entity.BusDriver">
+    <!--@mbg.generated-->
+    <!--@Table bus_driver-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="BOOLEAN" property="gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="dno" jdbcType="VARCHAR" property="dno" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, car_id, `name`, gender, email, phone, credit, age, `status`, dno, create_time, 
+    update_time
+  </sql>
+
+  <select id="listDriver" parameterType="xyz.jfshare.car.system.entity.BusDriver" resultType="xyz.jfshare.car.system.entity.BusDriver">
+    SELECT
+    bd.id,
+    bd.user_id,
+    bd.car_id,
+    bd.name,
+    bd.gender,
+    bd.email,
+    bd.phone,
+    bd.if_chosen,
+    bd.price,
+    bd.credit,
+    bd.age,
+    bd.status,
+    bd.dno,
+    bd.update_time,
+    su.nickname as nickname,
+    bc.number as carNumber,
+    bc.bands as bands
+    FROM bus_driver bd
+    left join sys_user su on bd.user_id = su.id
+    left join bus_car bc on bd.car_id = bc.id
+    where bd.id != 0
+    <if test="name != null">
+      and bd.name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="nickname != null">
+      and su.nickname LIKE CONCAT('%',#{nickname},'%')
+    </if>
+    ORDER BY bd.id DESC
+    <if test="size != null">
+      LIMIT #{skip},#{size}
+    </if>
+  </select>
+
+  <select id="countDriver" parameterType="xyz.jfshare.car.system.entity.BusDriver" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM bus_driver bd
+    left join sys_user su on bd.user_id = su.id
+    left join bus_car bc on bd.car_id = bc.id
+    where bd.id != 0
+      <if test="name != null">
+          and bd.name LIKE CONCAT('%',#{name},'%')
+      </if>
+      <if test="nickname != null">
+          and su.nickname LIKE CONCAT('%',#{nickname},'%')
+      </if>
+  </select>
+
+  <select id="getAll" parameterType="xyz.jfshare.car.system.entity.BusDriver" resultType="xyz.jfshare.car.system.entity.BusDriver">
+        SELECT
+        bd.id,
+        bd.user_id,
+        bd.car_id,
+        bd.name,
+        bd.gender,
+        bd.email,
+        bd.price,
+        bd.phone,
+        bd.if_chosen,
+        bd.credit,
+        bd.age,
+        bd.status,
+        bd.dno,
+        bd.update_time,
+        su.nickname as nickname,
+        bc.number as carNumber,
+        bc.bands as bands
+        FROM bus_driver bd
+        left join sys_user su on bd.user_id = su.id
+        left join bus_car bc on bd.car_id = bc.id
+        ORDER BY bd.id DESC
+    </select>
+</mapper>
