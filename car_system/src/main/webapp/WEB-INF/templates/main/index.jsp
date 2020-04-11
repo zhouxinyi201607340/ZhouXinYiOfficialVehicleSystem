@@ -6,7 +6,7 @@
 <div class="content-wrapper">
   <section class="content">
     <div style="text-align: center;line-height: 200px;">
-      <h1 style="margin-top: 20%">欢迎来到公务车辆租赁管理系统</h1>
+      <h1 style="margin-top: 20%">欢迎来到公务车辆租赁管理系统<img src="../../../static/favicon.ico"></h1>
     </div>
   </section>
 

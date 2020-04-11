@@ -55,7 +55,7 @@
 
                                             <div class="box-body">
                                                 <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">名称</label>
+                                                    <label for="inputName" class="col-sm-2 control-label">等级</label>
 
                                                     <div class="col-sm-10">
                                                         <input name="name" type="text" class="form-control" id="inputName" placeholder="请输入名称">

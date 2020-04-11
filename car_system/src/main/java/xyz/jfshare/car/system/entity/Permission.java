@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+
 @TableName("sys_permission")
 public class Permission {
     /** id主键 */
@@ -85,9 +86,7 @@ public class Permission {
         return isMenu;
     }
 
-    public void setIsMenu(Integer isMenu) {
-        this.isMenu = isMenu;
-    }
+    public void setIsMenu(Integer isMenu) { this.isMenu = isMenu; }
 
     public Integer getPid() {
         return pid;

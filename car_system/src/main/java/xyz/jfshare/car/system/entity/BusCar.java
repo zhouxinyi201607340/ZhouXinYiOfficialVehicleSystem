@@ -73,4 +73,19 @@ public class BusCar {
     /** 分类名称 */
     @TableField(exist = false)
     private String classify;
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setUpdateTime(Date updateTime) { this.updateTime = updateTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 }
